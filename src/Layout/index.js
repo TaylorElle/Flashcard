@@ -9,7 +9,7 @@ import { listDecks, deleteDeck } from "../utils/api";
 import EditDeck from "./EditDeck";
 import EditCard from "./EditCard";
 import AddCard from "./AddCard";
-import deckCreation from "./DeckCreation";
+import DeckCreation from "./DeckCreation";
 
 function Layout() {
   return (
@@ -26,7 +26,7 @@ function Layout() {
             <Home listDecks={listDecks} deleteDeck={deleteDeck} />
           </Route>
           <Route path="/decks/new">
-            <deckCreation />
+            <DeckCreation />
           </Route>
           <Route path="/decks/:deckId">
             <Deck />

@@ -2,9 +2,28 @@
 // A "Create Deck" button is shown and clicking it brings the user to the Create Deck screen.
 import React from "react";
 import { Link } from "react-router-dom";
-import { createDeck } from "../utils/api";
+import { createDeck, listDecks, deleteDeck } from "../utils/api";
+import { useState } from "react";
 
-function deckCreation() {
+//when submit is clicked, want to take the info from tetarea/input (from the form), call createDeck with it
+//useState to "save" the info from the inputs - so we can track it and use it
+//then add that state into into an object and then call the createDeck
+//LOOKUP: controlled Inputs ... controlled data
+
+//envent handler for sumbit
+//test it and see if it works
+//async
+
+function DeckCreation() {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const newDeck = { name: { name }, description: { description } };
+    createDeck(newDeck).then(console.log);
+    // console.log(createDeck(newDeck));
+  };
   return (
     // NAV BAR
     <>
@@ -28,9 +47,11 @@ function deckCreation() {
         </label>
         <input
           type="text"
+          value={name}
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="Deck Name"
+          onChange={(event) => setName(event.target.value)}
         ></input>
       </div>
       <div className="mb-3">
@@ -39,8 +60,10 @@ function deckCreation() {
         </label>
         <textarea
           className="form-control"
+          value={description}
           id="exampleFormControlTextarea1"
           placeholder="Brief Description of the deck"
+          onChange={(event) => setDescription(event.target.value)}
           rows="2"
         ></textarea>
       </div>
@@ -54,6 +77,7 @@ function deckCreation() {
         <button
           type="submit"
           className="btn btn-primary"
+          onClick={handleSubmit}
           //TO DO: FIND A WAY TO SUBMIT THE DECK AND THEN RETURN HOME
         >
           Submit
@@ -63,4 +87,4 @@ function deckCreation() {
   );
 }
 
-export default deckCreation;
+export default DeckCreation;

@@ -1,4 +1,227 @@
 {
-  "decks": [],
+  "decks": [
+    {
+      "id": 1,
+      "name": "Rendering in React",
+      "description": "React's component structure allows for quickly building a complex web application that relies on DOM manipulation. "
+    },
+    {
+      "name": "React Router",
+      "description": "React Router is a collection of navigational components that compose declaratively with your application.",
+      "id": 2
+    },
+    {
+      "name": "React Router",
+      "description": "React Router is a collection of navigational components that compose declaratively with your application.",
+      "id": 3
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 4
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 5
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 6
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 7
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 8
+    },
+    {
+      "name": {
+        "name": ""
+      },
+      "description": {
+        "description": ""
+      },
+      "id": 9
+    },
+    {
+      "name": {
+        "name": ""
+      },
+      "description": {
+        "description": ""
+      },
+      "id": 10
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 11
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 12
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 13
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 14
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 15
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 16
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 17
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 18
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 19
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 20
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "z\n"
+      },
+      "id": 21
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "z\n"
+      },
+      "id": 22
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "z\n"
+      },
+      "id": 23
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "z\n"
+      },
+      "id": 24
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "z"
+      },
+      "id": 25
+    },
+    {
+      "name": {
+        "name": "Favorite Names"
+      },
+      "description": {
+        "description": "Zachary"
+      },
+      "id": 26
+    }
+  ],
   "cards": []
 }

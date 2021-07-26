@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createCard } from "../utils/api";
+import { createDeck } from "../utils/api";
 
-// /decks/:deckId/cards/new is the path
-function AddCard({ cards, setCards, deck, setDeck }) {
+function AddDeck() {
   const initialState = {
-    id: "",
-    front: "",
-    back: "",
-    deckId: "",
+    name: "",
+    message: "",
   };
   const [formData, setFormData] = useState(initialState);
 
@@ -17,44 +14,41 @@ function AddCard({ cards, setCards, deck, setDeck }) {
       ...formData,
       [event.target.name]: event.target.value,
     });
-    console.log(event.target.name);
   };
 
   const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createCard(deck.id, formData).then((result) => {
-      // console.log(result);
-      history.push(`/decks/${result.deckId}`);
-    });
+    createDeck(formData).then((result) => history.push(`/decks/${result.id}`));
   };
 
   return (
     <div>
       <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
             <a href="/">Home</a>
           </li>
-          <li className="breadcrumb-item">
-            <a href={`/decks/${deck.id}`}>{deck.name}</a>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            Add Card
+          <li class="breadcrumb-item active" aria-current="page">
+            Add A Deck
           </li>
         </ol>
       </nav>
-      <h2>{deck.name}: Add Card</h2>
+
       <form onSubmit={handleSubmit}>
-        <label htmlFor="front">
-          Front
-          <input type="text" name="front" id="front" onChange={handleChange} />
+        <label htmlFor="name">
+          Deck Name:
+          <input type="text" name="name" id="name" onChange={handleChange} />
         </label>
         <br />
-        <label htmlFor="back">
-          Back
-          <textarea name="back" id="back" onChange={handleChange} />
+        <label htmlFor="description">
+          Description:
+          <textarea
+            name="description"
+            id="description"
+            onChange={handleChange}
+          />
         </label>
         <br />
         <button
@@ -72,4 +66,4 @@ function AddCard({ cards, setCards, deck, setDeck }) {
   );
 }
 
-export default AddCard;
+export default AddDeck;

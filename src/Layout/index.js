@@ -1,45 +1,82 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 //import CreateDeck from "./CreateDeck";
 import { Route, Link, Switch } from "react-router-dom";
 import Header from "./Header";
 import NotFound from "./NotFound";
 import Home from "./Home";
-import Deck from "./Deck";
-import { listDecks, deleteDeck } from "../utils/api";
+import AddDeck from "./AddDeck";
 import EditDeck from "./EditDeck";
-import EditCard from "./EditCard";
+import ViewDeck from "./ViewDeck";
+import Study from "./Study";
 import AddCard from "./AddCard";
-import DeckCreation from "./DeckCreation";
+import EditCard from "./EditCard";
+import { listDecks } from "../utils/api";
 
 function Layout() {
+  const [reRender, setReRender] = useState(false);
+
+  const [decks, setDecks] = useState([]);
+  const [deck, setDeck] = useState({});
+  const [cards, setCards] = useState([]);
+  const [card, setCard] = useState({});
+
+  useEffect(() => {
+    listDecks().then(setDecks);
+  }, []);
+
   return (
     <div>
       <Header />
       <div className="container">
         <Switch>
-          {/* <Route path="/decks/:deckId">
-            <Deck />
-          </Route>
-          */}
-
           <Route exact path="/">
-            <Home listDecks={listDecks} deleteDeck={deleteDeck} />
+            <Link to="/decks/new">
+              <button type="button" className="btn btn-secondary  ">
+                <i className="bi bi-plus-square"></i> Create Deck
+              </button>
+            </Link>
+            <Home
+              decks={decks}
+              listDecks={listDecks}
+              reRender={reRender}
+              setReRender={setReRender}
+            />
           </Route>
-          <Route path="/decks/new">
-            <DeckCreation />
+
+          <Route exact path="/decks/new">
+            <AddDeck />
           </Route>
-          <Route path="/decks/:deckId">
-            <Deck />
+
+          <Route exact path="/decks/:deckId">
+            <ViewDeck deck={deck} setDeck={setDeck} />
           </Route>
-          <Route path="/decks/:deckId/edit">
-            <EditDeck />
+
+          <Route exact path="/decks/:deckId/edit">
+            <EditDeck deck={deck} setDeck={setDeck} />
           </Route>
-          <Route path="/decks/:deckId/cards/new">
-            <AddCard />
+
+          <Route exact path="/decks/:deckId/study">
+            <Study
+              // cards={cards}
+              // setCards={setCards}
+              deckId={deck.id}
+              // setDeck={setDeck}
+            />
           </Route>
-          <Route path="/decks/:deckId/cards/:cardId/edit">
-            <EditCard />
+
+          <Route exact path="/decks/:deckId/cards/new">
+            <AddCard
+              cards={cards}
+              setCards={setCards}
+              deck={deck}
+              setDeck={setDeck}
+            />
           </Route>
+
+          <Route exact path="/decks/:deckId/cards/:cardId/edit">
+            <EditCard card={card} setCard={setCard} deck={deck} />
+          </Route>
+
           <Route>
             <NotFound />
           </Route>
@@ -48,50 +85,7 @@ function Layout() {
     </div>
   );
 }
-
 export default Layout;
-
-// function Layout() {
-//   const decksArr = data.decks;
-//   const list = decksArr.map((oneDeck) => {
-//     return (
-//       <div className="card">
-//         {/* style="width: 18rem" */}
-//         <div className="card-body">
-//           <h5 className="card-title">{oneDeck.name}</h5>
-//           <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
-//           <p className="card-text">{oneDeck.description}</p>
-//           <Link href="#" className="card-link" className="btn btn-secondary">
-//             Edit
-//             {/* Directions say "View" but that doesn't make sense */}
-//           </Link>
-//           <Link href="#" className="btn btn-primary">
-//             Study
-//           </Link>
-//           <Link href="#" className="card-link" className="btn btn-danger">
-//             Delete
-//           </Link>
-//         </div>
-//       </div>
-//     );
-//   });
-//   // console.log(list);
-
-//   return (
-//     <>
-//       <Link className="btn btn-secondary" to="/decks/new" role="button">
-//         + Create Deck
-//       </Link>
-
-//       <div className="container">
-//         {/* TODO: Implement the screen starting here */}
-//         <div className="row">{list}</div>
-//       </div>
-//     </>
-//   );
-// }
-
-// export default Layout;
 
 // The path to this screen should be /.
 // A "Create Deck" button is shown

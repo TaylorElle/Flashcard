@@ -2,7 +2,7 @@ import React from "react";
 
 function NotFound() {
   return (
-    <>
+    <div>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li class="breadcrumb-item">
@@ -17,7 +17,7 @@ function NotFound() {
       <div className="NotFound">
         <h1> Page Not Found</h1>
       </div>
-    </>
+    </div>
   );
 }
 

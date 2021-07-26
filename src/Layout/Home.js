@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
-// import { listDecks, deleteDeck } from "../utils/api";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import { deleteDeck } from "../utils/api/index.js";
 
-function Home({ listDecks, deleteDeck }) {
+function Home({ decks, reRender, setReRender }) {
   const history = useHistory();
-  const [decks, setDecks] = useState([]);
-  const [length, setLength] = useState(0);
-  useEffect(() => {
-    listDecks().then(setDecks);
-  }, [length]);
 
   const handleDelete = async (id) => {
     const confirmation = window.confirm(
@@ -16,16 +11,14 @@ function Home({ listDecks, deleteDeck }) {
     );
     if (confirmation) {
       await deleteDeck(id);
-      /*listDecks()
-         .then(setDecks)*/
-      setLength(decks.length);
+      history.go(0);
     }
   };
 
   const list = decks.map((deck) => {
     return (
-      <div className="card">
-        <div key={deck.id} className="card-body">
+      <div key={deck.id} className="card">
+        <div className="card-body">
           <h3 className="card-title">{deck.name}</h3>
           <p className="card-text">{deck.description}</p>
           <p>{deck.cards.length} cards</p>
@@ -40,7 +33,7 @@ function Home({ listDecks, deleteDeck }) {
               View
             </button>
           </Link>
-          <Link to={`/decks/${deck.id}`}>
+          <Link to={`/decks/${deck.id}/study`}>
             <button
               type="button"
               className="card-link"
@@ -64,11 +57,6 @@ function Home({ listDecks, deleteDeck }) {
 
   return decks ? (
     <div>
-      <Link to="/decks/new">
-        <button type="button" className="btn btn-secondary">
-          + Create Deck
-        </button>
-      </Link>
       <div className="row">{list}</div>
     </div>
   ) : (

@@ -45,9 +45,9 @@ async function fetchJson(url, options, onCancel) {
   try {
     const response = await fetch(url, options);
 
-    if (response.status < 200 || response.status > 399) {
-      throw new Error(`${response.status} - ${response.statusText}`);
-    }
+    // if (response.status < 200 || response.status > 399) {
+    //   throw new Error(`${response.status} - ${response.statusText}`);
+    // }
 
     if (response.status === 204) {
       return null;

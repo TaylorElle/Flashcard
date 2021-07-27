@@ -5,17 +5,14 @@ function NotFound() {
     <div>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
-          <li class="breadcrumb-item">
+          <li className="breadcrumb-item">
             {/* <i class="bi bi-house-door-fill"></i> */}
             <a href="/">Home</a>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            Page Not Found
           </li>
         </ol>
       </nav>
       <div className="NotFound">
-        <h1> Page Not Found</h1>
+        <h1> Not Found</h1>
       </div>
     </div>
   );

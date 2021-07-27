@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react";
 import { readDeck, updateDeck } from "../utils/api";
 import { useParams, useHistory } from "react-router-dom";
 
-function EditDeck({ deck, setDeck }) {
+function EditDeck() {
   const { deckId } = useParams();
-  const [formData, setFormData] = useState(deck);
+  const [formData, setFormData] = useState({});
+
   // console.log(deck);
 
   // const [deckName, setDeckName] = useState(deck.name);
@@ -19,11 +20,11 @@ function EditDeck({ deck, setDeck }) {
   //that would ensure i always have the inforoamtion i need no matter how long i stay on the site page
   useEffect(() => {
     const abortController = new AbortController();
-    setDeck({});
+    //     setDeck({});
     const readingDeck = async () => {
       try {
         const deckData = await readDeck(deckId, abortController.signal);
-        setDeck(() => ({ ...deck, ...deckData }));
+        setFormData(() => ({ ...deckData }));
       } catch (error) {
         if (error.name === "AbortError") {
           console.log(error);
@@ -64,7 +65,7 @@ function EditDeck({ deck, setDeck }) {
             <a href="/">Home</a>
           </li>
           <li className="breadcrumb-item">
-            <a href={`/decks/${deck.id}`}>{deck.name}</a>
+            <a href={`/decks/${deckId}`}>{formData.name}</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             Edit Deck

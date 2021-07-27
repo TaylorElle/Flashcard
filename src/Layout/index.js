@@ -60,6 +60,7 @@ function Layout() {
               // cards={cards}
               // setCards={setCards}
               deckId={deck.id}
+              deck={deck}
               // setDeck={setDeck}
             />
           </Route>

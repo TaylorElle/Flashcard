@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { createCard } from "../utils/api";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { createCard, readDeck } from "../utils/api";
 
 // /decks/:deckId/cards/new is the path
-function AddCard({ cards, setCards, deck, setDeck }) {
+function AddCard({ cards, setCards }) {
   const initialState = {
     id: "",
     front: "",
@@ -11,6 +11,30 @@ function AddCard({ cards, setCards, deck, setDeck }) {
     deckId: "",
   };
   const [formData, setFormData] = useState(initialState);
+  const { deckId } = useParams();
+  const [deck, setDeck] = useState({});
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const readingDeck = async () => {
+      try {
+        const deckData = await readDeck(deckId, abortController.signal);
+        setDeck(() => ({ ...deckData }));
+        // setReRender(!reRender);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          console.log(error);
+        } else {
+          throw error;
+        }
+      }
+    };
+
+    readingDeck();
+    return () => {
+      abortController.abort();
+    };
+  }, [deckId]);
 
   const handleChange = (event) => {
     setFormData({
@@ -24,7 +48,7 @@ function AddCard({ cards, setCards, deck, setDeck }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createCard(deck.id, formData).then((result) => {
+    createCard(deckId, formData).then((result) => {
       // console.log(result);
       history.push(`/decks/${result.deckId}`);
     });
@@ -38,7 +62,7 @@ function AddCard({ cards, setCards, deck, setDeck }) {
             <a href="/">Home</a>
           </li>
           <li className="breadcrumb-item">
-            <a href={`/decks/${deck.id}`}>{deck.name}</a>
+            <a href={`/decks/${deckId}`}>{deck.name}</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             Add Card
@@ -49,12 +73,17 @@ function AddCard({ cards, setCards, deck, setDeck }) {
       <form onSubmit={handleSubmit}>
         <label htmlFor="front">
           Front
-          <input type="text" name="front" id="front" onChange={handleChange} />
+          <textarea
+            type="text"
+            name="front"
+            id="front"
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label htmlFor="back">
           Back
-          <textarea name="back" id="back" onChange={handleChange} />
+          <textarea type="text" name="back" id="back" onChange={handleChange} />
         </label>
         <br />
         <button

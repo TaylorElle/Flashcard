@@ -1,14 +1,13 @@
-// /decks/:deckId/cards/:cardId/edit is the path
-// /decks/:deckId/cards/new is the path
-// /decks/:deckId/edit is the path
-import { readDeck, readCard, updateCard } from "../utils/api";
+import { readCard, updateCard, readDeck } from "../utils/api";
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import Card from "./Card";
 
-function EditCard({ card, setCard, deck }) {
-  //initialize state to the card so that i can then use it later when card is updated
-  const [formData, setFormData] = useState(card);
+function EditCard() {
+  const [formData, setFormData] = useState({});
   const { deckId, cardId } = useParams();
+  const [deck, setDeck] = useState({});
+
   const history = useHistory();
 
   useEffect(() => {
@@ -19,40 +18,45 @@ function EditCard({ card, setCard, deck }) {
     loadTheCard();
   }, [cardId]);
 
-  // useEffect(() => {
-  //   const abortController = new AbortController();
+  useEffect(() => {
+    async function readTheDeck() {
+      const deckIsRead = await readDeck(deckId);
+      setDeck(deckIsRead);
+    }
+    readTheDeck();
+  }, [deckId]);
 
-  //   const readTheCard = async () => {
-  //     try {
-  //       const cardData = await readCard(cardId, abortController.signal);
-  //       setCard(() => ({ ...card, ...cardData }));
-  //     } catch (error) {
-  //       if (error.name === "AbortError") {
-  //         console.log(error);
-  //       } else {
-  //         throw error;
-  //       }
-  //     }
-  //   };
+  useEffect(() => {
+    const abortController = new AbortController();
+    const readingDeck = async () => {
+      try {
+        const deckData = await readDeck(deckId, abortController.signal);
+        setDeck(() => ({ ...deckData }));
+      } catch (error) {
+        if (error.name === "AbortError") {
+          console.log(error);
+        } else {
+          throw error;
+        }
+      }
+    };
 
-  //   readTheCard();
-  //   return () => {
-  //     abortController.abort();
-  //   };
-  // }, [cardId]);
+    readingDeck();
+    return () => {
+      abortController.abort();
+    };
+  }, [deckId]);
 
   const handleChange = (event) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
-    // console.log(event.target.name);
   };
 
   function handleSubmit(event) {
     event.preventDefault();
     updateCard(formData).then((result) => {
-      // console.log(result);
       history.push(`/decks/${deckId}`);
     });
   }
@@ -65,49 +69,21 @@ function EditCard({ card, setCard, deck }) {
             <a href="/">Home</a>
           </li>
           <li className="breadcrumb-item">
-            <a href={`/decks/${deck.id}`}>{deck.name}</a>
+            <a href={`/decks/${deckId}`}>{deck.name}</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             Edit Card {cardId}
           </li>
         </ol>
       </nav>
-      <h2>
-        {deck.name}: Edit Card {cardId}
-      </h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="front">
-          Front
-          <input
-            type="text"
-            name="front"
-            id="front"
-            value={formData.front}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label htmlFor="back">
-          Back
-          <textarea
-            name="back"
-            id="back"
-            value={formData.back}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => history.push(`/decks/${deckId}`)}
-        >
-          Cancel
-        </button>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
+      <h2>Edit Card </h2>
+
+      <Card
+        formData={formData}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        deckId={deckId}
+      />
     </div>
   );
 }

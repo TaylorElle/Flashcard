@@ -1,4 +1,3 @@
-// /decks/:deckId/edit is the path
 import React, { useEffect, useState } from "react";
 
 import { readDeck, updateDeck } from "../utils/api";
@@ -8,19 +7,12 @@ function EditDeck() {
   const { deckId } = useParams();
   const [formData, setFormData] = useState({});
 
-  // console.log(deck);
-
-  // const [deckName, setDeckName] = useState(deck.name);
-  // const [deckDescription, setDeckDescription] = useState(deck.description);
-  //initialize the state as the prop value
-
   //useEffect is like an event listener. it is like a conditional statement and it's listening for a reason to re-render. deckId is it's reason, right now.
   //this fxn reads the deck from the API to get the information. however, because i am passing the inforamtion through props, i do not need to re-render from the api.
   // However, it would be better to re-format to not pass props but intead, pass just the id and GET the infomraiton from the api using the id i just passed.
   //that would ensure i always have the inforoamtion i need no matter how long i stay on the site page
   useEffect(() => {
     const abortController = new AbortController();
-    //     setDeck({});
     const readingDeck = async () => {
       try {
         const deckData = await readDeck(deckId, abortController.signal);
@@ -40,7 +32,6 @@ function EditDeck() {
     };
   }, [deckId]);
 
-  //contolling our input state for the form
   const handleChange = (event) => {
     console.log(event.target.value);
 
@@ -72,7 +63,6 @@ function EditDeck() {
           </li>
         </ol>
       </nav>
-      {/* onSubmit={deck} */}
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
           Deck Name:

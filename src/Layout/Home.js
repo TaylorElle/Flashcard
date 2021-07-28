@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { deleteDeck } from "../utils/api/index.js";
+import { deleteDeck, listDecks } from "../utils/api/index.js";
 
-function Home({ decks, reRender, setReRender }) {
+function Home() {
   const history = useHistory();
+  const [decks, setDecks] = useState([]);
+
+  useEffect(() => {
+    listDecks().then(setDecks);
+  }, []);
 
   const handleDelete = async (id) => {
     const confirmation = window.confirm(
@@ -26,7 +31,6 @@ function Home({ decks, reRender, setReRender }) {
           <Link to={`/decks/${deck.id}`}>
             <button
               type="button"
-              className="card-link"
               className="btn btn-secondary"
               onClick={() => history.push(`/decks/${deck.id}`)}
             >
@@ -34,17 +38,12 @@ function Home({ decks, reRender, setReRender }) {
             </button>
           </Link>
           <Link to={`/decks/${deck.id}/study`}>
-            <button
-              type="button"
-              className="card-link"
-              className="btn btn-primary"
-            >
+            <button type="button" className="btn btn-primary">
               Study
             </button>
           </Link>
           <button
             type="delete"
-            className="card-link"
             className="btn btn-danger float-right"
             onClick={() => handleDelete(deck.id)}
           >

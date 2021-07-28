@@ -31,7 +31,6 @@ function CardList({ cards = [] }) {
               {card.back}
             </div>
             <div className="btn-group" role="group">
-              {/* "/decks/:deckId/cards/:cardId/edit */}
               <Link to={`${url}/cards/${card.id}/edit`}>
                 <button type="button" className="btn btn-secondary">
                   Edit
@@ -39,7 +38,6 @@ function CardList({ cards = [] }) {
               </Link>
               <button
                 type="delete"
-                className="card-link"
                 className="btn btn-danger float-right"
                 onClick={() => handleDelete(card.id)}
               >
